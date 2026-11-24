@@ -1,70 +1,23 @@
 # VoltLink Landing Page
 
-Official public landing page and web presence for VoltLink - The new companion to your two-wheeler.
+Official public web presence and landing platform for VoltLink - The new companion to your two-wheeler.
 
-## Tech Stack
+## Proprietary Notice & Ownership
 
-- React 19
-- TypeScript
-- Vite
-- Tailwind CSS v4
-- GSAP & ScrollTrigger
-- Three.js
-- Lucide Icons
+**Copyright (c) 2026 VoltLink Technologies. All rights reserved.**
 
-## Quick Start
+This repository, including all source code, architecture, visual assets, 3D world models, animations, typography, brand marks, and documentation, is the exclusive proprietary intellectual property of VoltLink Technologies.
 
-### 1. Install Dependencies
+### Terms of Use & Legal Restrictions
 
-```bash
-npm install
-```
+- **Proprietary Software**: This repository is maintained strictly for official deployment, staging, and internal version control by VoltLink Technologies.
+- **No License Granted**: Even if this repository is publicly accessible, no license, grant, permission, or right (express or implied) is granted to any individual, organization, or entity to use, run, download, copy, distribute, modify, merge, publish, sublicense, host, sell, or create derivative works of any portion of this repository.
+- **Strictly Prohibited**: Any unauthorized extraction, scraping, reproduction, commercial or personal use, framing, or reverse engineering of any code, style tokens, UI/UX interaction models, or branding is strictly forbidden under domestic and international copyright, trademark, and intellectual property laws.
+- **Brand Protection**: The VoltLink name, logo, iconography, marks, and design system are registered and common-law trademarks of VoltLink Technologies.
 
-### 2. Start Development Server
+For authorized enterprise inquiries and partnerships, contact: `legal@voltlink.in`.
 
-```bash
-npm run dev
-```
+## Official Ecosystem Endpoints
 
-Starts the local development server at `http://localhost:5173`. In development mode, garage portal links default to `http://localhost:5174`.
-
-### 3. Build for Production
-
-```bash
-npm run build
-```
-
-Performs type checking with TypeScript and builds the production-optimized static bundle to the `dist/` directory.
-
-### 4. Preview Production Build
-
-```bash
-npm run preview
-```
-
-Serves the built bundle from `dist/` locally.
-
-## Environment Variables
-
-Copy `.env.example` to `.env` or set environment variables in your deployment platform:
-
-| Variable | Description | Default (Dev) | Default (Prod) |
-| :--- | :--- | :--- | :--- |
-| `VITE_GARAGE_PORTAL_URL` | Target URL for Garage Portal login and registration | `http://localhost:5174` | `https://guradge.voltlink.in` |
-
-## Deployment
-
-### Vercel Deployment
-
-This repository includes a dedicated `vercel.json` configuration configured with:
-- Framework preset: `vite`
-- Single Page Application rewrites to `/index.html`
-- 1-year immutable caching for static assets in `/assets/`
-- Standard security headers (`nosniff`, `SAMEORIGIN`, `strict-origin-when-cross-origin`)
-
-To deploy via Vercel:
-1. Push this repository to GitHub (`git@github.com:voltlink-in/voltlink-landing.git`).
-2. Import the project in your Vercel Dashboard.
-3. Keep default settings (`Build Command: npm run build`, `Output Directory: dist`).
-4. (Optional) Set `VITE_GARAGE_PORTAL_URL` to `https://guradge.voltlink.in` in Vercel Environment Variables.
-
+- **Public Platform**: [https://voltlink.in](https://voltlink.in)
+- **Partner Workshop Portal**: [https://guradge.voltlink.in](https://guradge.voltlink.in)

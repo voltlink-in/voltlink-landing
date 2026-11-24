@@ -227,7 +227,19 @@
 @media (max-width: 600px) {
   .vl-landing .vl-ft { --ft-span: 0.9; --ft-horizon: 0.78; --ft-stage-h: max(250px, 74vw); --ft-ride: 80vh; }
   .vl-ft-ghost { font-size: 31vw; }
-  .vl-ft-services { grid-template-columns: 1fr; row-gap: 0; }
+  .vl-ft-slab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px 48px;
+  }
+  .vl-ft-services {
+    grid-template-columns: 1fr;
+    row-gap: 0;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+  }
   .vl-ft-service, .vl-ft-service:nth-child(3) {
     display: grid;
     grid-template-columns: 34px 1fr;
@@ -240,9 +252,58 @@
   .vl-ft-service svg { grid-row: span 2; }
   .vl-ft-service h3 { margin: 2px 0 8px; }
   .vl-ft-service h3 br { display: none; }
-  .vl-ft-cta { margin-top: 28px; }
-  .vl-ft-statement { font-size: clamp(36px, 11vw, 48px); }
-  .vl-ft-cols { gap: 28px 40px; }
-  .vl-ft-legal { gap: 10px 18px; }
-  .vl-ft-tag { margin-left: 0; flex-basis: 100%; }
+  .vl-ft-cta {
+    margin: 28px auto 0;
+    display: inline-flex;
+    justify-content: center;
+  }
+  .vl-ft-main {
+    grid-template-columns: 1fr;
+    width: 100%;
+    max-width: 480px;
+    margin: 40px auto 0;
+    text-align: center;
+  }
+  .vl-ft-statement {
+    font-size: clamp(34px, 10vw, 48px);
+    text-align: center;
+    margin: 0 auto 28px;
+  }
+  .vl-ft-cols {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    gap: 28px 48px;
+  }
+  .vl-ft-cols > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .vl-ft-cols ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
+  .vl-ft-legal {
+    width: 100%;
+    max-width: 480px;
+    margin: 32px auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+  }
+  .vl-ft-brand {
+    justify-content: center;
+  }
+  .vl-ft-tag {
+    margin-left: 0;
+    text-align: center;
+    flex-basis: 100%;
+  }
 }

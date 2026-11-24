@@ -22,13 +22,14 @@ interface Props {
   isLight: boolean;
   onToggleTheme: () => void;
   year: number;
+  onGarageAction?: (e: React.MouseEvent, path: string) => void;
 }
 
 /**
  * The last chapter: one scooter parked on the dark slab the footer is built on, the giant wordmark behind it, what
  * VoltLink does along the slab's top, then the links.
  */
-export function LandingFooter({ rootRef, nav, scrollTo, isLight, onToggleTheme, year }: Props): React.JSX.Element {
+export function LandingFooter({ rootRef, nav, scrollTo, isLight, onToggleTheme, year, onGarageAction }: Props): React.JSX.Element {
   const footRef = useRef<HTMLElement>(null);
   const speedRef = useRef<HTMLSpanElement>(null);
 
@@ -119,12 +120,20 @@ export function LandingFooter({ rootRef, nav, scrollTo, isLight, onToggleTheme, 
               <h3>Garages</h3>
               <ul>
                 <li>
-                  <a href={`${GARAGE_PORTAL_URL}/login`} className="cursor-target">
+                  <a
+                    href={`${GARAGE_PORTAL_URL}/login`}
+                    className="cursor-target"
+                    onClick={(e) => (onGarageAction ? onGarageAction(e, '/login') : undefined)}
+                  >
                     Garage owner login
                   </a>
                 </li>
                 <li>
-                  <a href={`${GARAGE_PORTAL_URL}/contact-admin`} className="cursor-target">
+                  <a
+                    href={`${GARAGE_PORTAL_URL}/contact-admin`}
+                    className="cursor-target"
+                    onClick={(e) => (onGarageAction ? onGarageAction(e, '/contact-admin') : undefined)}
+                  >
                     Contact admin
                   </a>
                 </li>

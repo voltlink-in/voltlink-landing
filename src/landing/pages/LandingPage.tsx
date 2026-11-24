@@ -4,11 +4,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   ArrowRight,
   Bike,
+  Loader2,
+  Menu,
   Moon,
   Route,
   Siren,
   Sun,
   Wrench,
+  X,
 } from 'lucide-react';
 import { BrandLogo } from '../../components/BrandLogo';
 import { useThemeStore } from '../../store/themeStore';
@@ -192,6 +195,45 @@ export function LandingPage(): React.JSX.Element {
   const toggleLabel = isLight ? 'Switch to dark mode' : 'Switch to light mode';
   const shotBase = isLight ? '/screenshots/light' : '/screenshots/dark';
   const year = new Date().getFullYear();
+
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [isCheckingGarage, setIsCheckingGarage] = React.useState(false);
+  const [underConstructionOpen, setUnderConstructionOpen] = React.useState(false);
+
+  const handleGarageClick = async (e?: React.SyntheticEvent, path: string = '/login') => {
+    if (e) e.preventDefault();
+    setIsCheckingGarage(true);
+
+    const targetUrl = `${GARAGE_PORTAL_URL}${path}`;
+
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 1800);
+      await fetch(targetUrl, {
+        method: 'GET',
+        mode: 'no-cors',
+        cache: 'no-store',
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
+      setIsCheckingGarage(false);
+      window.location.href = targetUrl;
+    } catch {
+      setIsCheckingGarage(false);
+      setUnderConstructionOpen(true);
+    }
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setUnderConstructionOpen(false);
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Header: a full-width bar at the top that settles into a floating pill once the page moves.
   useEffect(() => {
@@ -378,14 +420,88 @@ export function LandingPage(): React.JSX.Element {
             ))}
           </ul>
           <div className="vl-actions">
-            <a href={`${GARAGE_PORTAL_URL}/login`} className="vl-login cursor-target">
+            <a
+              href={`${GARAGE_PORTAL_URL}/login`}
+              className="vl-login cursor-target"
+              onClick={(e) => handleGarageClick(e, '/login')}
+            >
               Garage login
             </a>
-            <a href={`${GARAGE_PORTAL_URL}/contact-admin`} className="vl-pill cursor-target">
-              Get a garage account
+            <a
+              href={`${GARAGE_PORTAL_URL}/contact-admin`}
+              className="vl-pill cursor-target"
+              onClick={(e) => handleGarageClick(e, '/contact-admin')}
+            >
+              {isCheckingGarage ? <Loader2 size={15} className="animate-spin" /> : 'Get a garage account'}
             </a>
           </div>
+
+          <div className="vl-mobile-actions">
+            <button
+              type="button"
+              className="vl-mobile-toggle cursor-target"
+              onClick={() => setMobileMenuOpen((prev) => !prev)}
+              aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={mobileMenuOpen}
+            >
+              {mobileMenuOpen ? <X size={22} strokeWidth={2.2} /> : <Menu size={22} strokeWidth={2.2} />}
+            </button>
+          </div>
         </nav>
+
+        {mobileMenuOpen && (
+          <div className="vl-mobile-dropdown">
+            <ul className="vl-mobile-links">
+              {NAV.map((n) => (
+                <li key={n.href}>
+                  <a
+                    href={n.href}
+                    className="cursor-target"
+                    onClick={(e) => {
+                      setMobileMenuOpen(false);
+                      scrollTo(n.href)(e);
+                    }}
+                  >
+                    <span>{n.label}</span>
+                    <ArrowRight size={14} opacity={0.6} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <div className="vl-mobile-divider" />
+            <div className="vl-mobile-portal-group">
+              <button
+                type="button"
+                className="vl-mobile-portal-btn cursor-target"
+                onClick={(e) => {
+                  setMobileMenuOpen(false);
+                  handleGarageClick(e, '/login');
+                }}
+              >
+                Garage login
+              </button>
+              <button
+                type="button"
+                className="vl-pill vl-pill--full cursor-target"
+                onClick={(e) => {
+                  setMobileMenuOpen(false);
+                  handleGarageClick(e, '/contact-admin');
+                }}
+              >
+                Get a garage account
+              </button>
+            </div>
+            <div className="vl-mobile-divider" />
+            <button
+              type="button"
+              className="vl-mobile-theme-btn cursor-target"
+              onClick={() => toggleTheme()}
+            >
+              {isLight ? <Moon size={16} /> : <Sun size={16} />}
+              <span>{isLight ? 'Switch to dark theme' : 'Switch to light theme'}</span>
+            </button>
+          </div>
+        )}
       </header>
 
       <main>
@@ -487,11 +603,21 @@ export function LandingPage(): React.JSX.Element {
               <Words text="Bring your workshop onto VoltLink." />
             </h2>
             <div className="vl-cta-row">
-              <a href={`${GARAGE_PORTAL_URL}/login`} className="vl-pill vl-pill--lg cursor-target" data-fade>
+              <a
+                href={`${GARAGE_PORTAL_URL}/login`}
+                className="vl-pill vl-pill--lg cursor-target"
+                data-fade
+                onClick={(e) => handleGarageClick(e, '/login')}
+              >
                 Garage owner login
                 <ArrowRight size={16} strokeWidth={2.2} />
               </a>
-              <a href={`${GARAGE_PORTAL_URL}/contact-admin`} className="vl-pill vl-pill--ghost vl-pill--lg cursor-target" data-fade>
+              <a
+                href={`${GARAGE_PORTAL_URL}/contact-admin`}
+                className="vl-pill vl-pill--ghost vl-pill--lg cursor-target"
+                data-fade
+                onClick={(e) => handleGarageClick(e, '/contact-admin')}
+              >
                 Contact admin for an account
               </a>
             </div>
@@ -527,7 +653,65 @@ export function LandingPage(): React.JSX.Element {
         isLight={isLight}
         onToggleTheme={toggleTheme}
         year={year}
+        onGarageAction={handleGarageClick}
       />
+
+      {underConstructionOpen && (
+        <div
+          className="vl-modal-backdrop"
+          onClick={() => setUnderConstructionOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="vl-modal-title"
+        >
+          <div
+            className="vl-modal-card"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="vl-modal-close"
+              onClick={() => setUnderConstructionOpen(false)}
+              aria-label="Close dialog"
+            >
+              <X size={18} />
+            </button>
+
+            <div className="vl-modal-icon-wrap">
+              <Wrench size={26} strokeWidth={2} />
+            </div>
+
+            <span className="vl-modal-badge">Workshop Portal</span>
+
+            <h3 id="vl-modal-title" className="vl-modal-title">
+              Portal Under Construction
+            </h3>
+
+            <p className="vl-modal-body">
+              The VoltLink Garage & Partner Workshop Portal (<code>guradge.voltlink.in</code>) is currently undergoing scheduled infrastructure updates and onboarding configuration.
+            </p>
+
+            <div className="vl-modal-info-box">
+              <div className="vl-modal-info-row">
+                <span className="vl-modal-info-label">Service</span>
+                <span className="vl-modal-info-val">Garage Operations System</span>
+              </div>
+              <div className="vl-modal-info-row">
+                <span className="vl-modal-info-label">Status</span>
+                <span className="vl-modal-info-val vl-modal-status-pill">Under Construction</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="vl-pill vl-pill--full cursor-target"
+              onClick={() => setUnderConstructionOpen(false)}
+            >
+              Got it
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
