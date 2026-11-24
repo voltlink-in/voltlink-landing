@@ -1,0 +1,248 @@
+/* Landing footer: a scooter parked where the page meets a dark slab, the wordmark huge behind it, what VoltLink
+   does along the slab's top edge, then the statement, links and legal line. Reads the page's tokens; sets only its own. */
+
+.vl-landing .vl-ft {
+  --ft-slab: #111114;
+  --ft-ink: #f2f2f4;
+  --ft-mute: #8d8f98;
+  --ft-line: rgba(255, 255, 255, 0.1);
+  --ft-accent: #a9b1ff;
+  /* the scooter's frame on its stage: the slab begins at --ft-horizon; --ft-span is how wide the scooter is */
+  --ft-horizon: 0.8;
+  --ft-span: 0.44;
+  --ft-centre: 0.5;
+  /* the stage holds still for --ft-ride of scrolling while the scroll rides the scooter in */
+  --ft-stage-h: clamp(300px, 40vw, 640px);
+  --ft-ride: 95vh;
+  --ft-stick: max(72px, calc((100vh - var(--ft-stage-h)) * 0.4));
+  position: relative;
+  z-index: 2;
+  margin-top: clamp(8px, 3vh, 32px);
+  overflow: clip; /* the slab under the held stage hangs below it; clip (not hidden) keeps sticky working */
+}
+.vl-landing[data-theme='dark'] .vl-ft { --ft-slab: #050506; }
+
+/* ── Stage: page colour above the horizon, slab below, the scooter standing on the line ── */
+.vl-ft-ride { position: relative; height: calc(var(--ft-stage-h) + var(--ft-ride)); }
+.vl-ft-stage {
+  position: sticky;
+  top: var(--ft-stick);
+  height: var(--ft-stage-h);
+}
+.vl-ft-clip { position: absolute; z-index: 0; inset: 0; overflow: hidden; }
+/* Reduced motion, or no WebGL: nothing to ride, so no held stretch */
+@media (prefers-reduced-motion: reduce) {
+  .vl-ft-ride { height: auto; }
+  .vl-ft-stage { position: relative; top: auto; }
+}
+.vl-ft-ride:has(.vl-ft-scooter[data-state='fallback']) { height: auto; }
+.vl-ft-ride:has(.vl-ft-scooter[data-state='fallback']) .vl-ft-stage { position: relative; top: auto; }
+.vl-ft-ghost {
+  position: absolute;
+  z-index: 0;
+  left: -25%;
+  right: -25%;
+  top: calc(var(--ft-horizon) * 100%);
+  translate: 0 -76%;
+  margin: 0;
+  text-align: center;
+  white-space: nowrap;
+  font-weight: 800;
+  font-size: clamp(130px, 25vw, 420px);
+  line-height: 1;
+  letter-spacing: -0.065em;
+  color: color-mix(in srgb, var(--vl-ink) 6.5%, transparent);
+  pointer-events: none;
+  user-select: none;
+}
+.vl-landing[data-theme='dark'] .vl-ft-ghost { color: color-mix(in srgb, var(--vl-ink) 5%, transparent); }
+.vl-ft-ground {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: -100vh; /* fills the view below the held stage */
+  top: calc(var(--ft-horizon) * 100%);
+  background: var(--ft-slab);
+}
+.vl-ft-speed {
+  position: absolute;
+  z-index: 3;
+  top: clamp(14px, 2.4vw, 32px);
+  left: clamp(20px, 5vw, 72px);
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--vl-mute);
+  font-variant-numeric: tabular-nums;
+}
+.vl-ft-speed span { display: inline-block; min-width: 2ch; text-align: right; color: var(--vl-ink); }
+.vl-ft-scooter {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  container-type: size;
+}
+.vl-ft-canvas { display: block; width: 100%; height: 100%; }
+.vl-ft-scooter[data-state='fallback'] .vl-ft-canvas { display: none; }
+/* The still picture is rendered at 2:1 with the scooter spanning 90% and the slab's edge at 80% of its height */
+.vl-ft-poster {
+  --w: calc(var(--ft-span) / 0.9 * 100cqw);
+  position: absolute;
+  width: var(--w);
+  height: auto;
+  left: calc(var(--ft-centre) * 100cqw - var(--w) / 2);
+  top: calc(var(--ft-horizon) * 100cqh - var(--w) * 0.4);
+}
+
+/* ── Slab ── */
+.vl-ft-slab {
+  position: relative;
+  z-index: 3;
+  background: var(--ft-slab);
+  color: var(--ft-ink);
+  padding: clamp(24px, 3.4vw, 48px) clamp(20px, 5vw, 72px) clamp(20px, 2.6vw, 32px);
+}
+.vl-ft-slab > * { max-width: 1320px; margin-inline: auto; }
+
+.vl-ft-services {
+  list-style: none;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.vl-ft-service { padding: 4px clamp(16px, 2.2vw, 32px) 0; border-left: 1px solid var(--ft-line); }
+.vl-ft-service:first-child { border-left: 0; padding-left: 0; }
+.vl-ft-service svg { color: var(--ft-accent); transition: transform 0.5s var(--vl-expo), color 0.3s var(--vl-sine); }
+.vl-ft-service:hover svg { transform: translateY(-3px); color: var(--ft-ink); }
+.vl-ft-service h3 {
+  margin: 22px 0 12px;
+  font-size: clamp(17px, 1.45vw, 21px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+.vl-ft-service p { margin: 0; max-width: 30ch; font-size: 13.5px; line-height: 1.55; color: var(--ft-mute); }
+
+.vl-ft-cta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  height: 40px;
+  margin-top: clamp(40px, 5.5vw, 72px);
+  padding: 0 18px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ft-ink);
+  transition: background-color 0.35s var(--vl-sine), color 0.35s var(--vl-sine), border-color 0.35s var(--vl-sine);
+}
+.vl-landing .vl-ft-cta { color: var(--ft-ink); }
+.vl-ft-cta svg { transition: transform 0.5s var(--vl-expo); }
+.vl-ft-cta:hover { background: var(--ft-ink); border-color: var(--ft-ink); color: var(--ft-slab); }
+.vl-landing .vl-ft-cta:hover { color: var(--ft-slab); }
+.vl-ft-cta:hover svg { transform: translateY(-3px); }
+
+.vl-ft-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 40px 64px;
+  margin-top: clamp(56px, 7vw, 104px);
+  padding-top: clamp(32px, 4vw, 48px);
+  border-top: 1px solid var(--ft-line);
+}
+/* doubled class: the page's `.vl-landing *` font reset loads after this file */
+.vl-landing .vl-ft-statement {
+  margin: 0;
+  font-family: var(--vl-serif);
+  font-weight: 400;
+  font-size: clamp(40px, 5.2vw, 84px);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+}
+.vl-ft-statement span { color: var(--ft-mute); }
+.vl-ft-cols { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 28px clamp(32px, 4.5vw, 64px); }
+.vl-ft-cols h3 {
+  margin: 0 0 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ft-mute);
+}
+.vl-ft-cols ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.vl-ft-cols a, .vl-ft-cols button {
+  font-size: 15px;
+  color: var(--ft-ink);
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  border: 0;
+  padding: 0 0 2px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.25s var(--vl-sine), background-size 0.45s var(--vl-expo);
+}
+.vl-landing .vl-ft-cols a { color: var(--ft-ink); }
+.vl-ft-cols a:hover, .vl-ft-cols button:hover, .vl-landing .vl-ft-cols a:hover { color: var(--ft-accent); background-size: 100% 1px; }
+
+.vl-ft-legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 24px;
+  margin-top: clamp(48px, 6vw, 88px);
+  padding-top: 20px;
+  border-top: 1px solid var(--ft-line);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ft-mute);
+}
+.vl-ft-brand { display: inline-flex; align-items: center; gap: 9px; }
+.vl-ft-brand img { height: 22px; width: auto; }
+.vl-ft-brand b { font-size: 15px; font-weight: 600; letter-spacing: -0.02em; text-transform: none; color: var(--ft-ink); }
+.vl-ft-tag { margin-left: auto; }
+
+/* ── Tablet ── */
+@media (max-width: 900px) {
+  .vl-landing .vl-ft { --ft-span: 0.64; --ft-stage-h: clamp(260px, 56vw, 500px); }
+  .vl-ft-services { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; }
+  .vl-ft-service:nth-child(3) { border-left: 0; padding-left: 0; }
+  .vl-ft-main { grid-template-columns: 1fr; }
+  .vl-ft-cols { justify-content: flex-start; }
+}
+
+/* ── Phone ── */
+@media (max-width: 600px) {
+  .vl-landing .vl-ft { --ft-span: 0.9; --ft-horizon: 0.78; --ft-stage-h: max(250px, 74vw); --ft-ride: 80vh; }
+  .vl-ft-ghost { font-size: 31vw; }
+  .vl-ft-services { grid-template-columns: 1fr; row-gap: 0; }
+  .vl-ft-service, .vl-ft-service:nth-child(3) {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    column-gap: 14px;
+    padding: 20px 0;
+    border-left: 0;
+    border-top: 1px solid var(--ft-line);
+  }
+  .vl-ft-service:first-child { border-top: 0; padding-top: 4px; }
+  .vl-ft-service svg { grid-row: span 2; }
+  .vl-ft-service h3 { margin: 2px 0 8px; }
+  .vl-ft-service h3 br { display: none; }
+  .vl-ft-cta { margin-top: 28px; }
+  .vl-ft-statement { font-size: clamp(36px, 11vw, 48px); }
+  .vl-ft-cols { gap: 28px 40px; }
+  .vl-ft-legal { gap: 10px 18px; }
+  .vl-ft-tag { margin-left: 0; flex-basis: 100%; }
+}

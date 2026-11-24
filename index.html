@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('voltlink-theme');
+          var t = saved === 'light' || saved === 'dark' ? saved : 'dark';
+          var r = document.documentElement;
+          r.classList.toggle('light-theme', t === 'light');
+          r.classList.toggle('dark-theme', t === 'dark');
+          r.classList.toggle('dark', t === 'dark');
+          r.style.colorScheme = t;
+        } catch (e) {}
+      })();
+    </script>
+    <title>VoltLink - Two-Wheeler Servicing & Roadside Assistance</title>
+    <meta name="description" content="VoltLink - The new companion to your two-wheeler. Roadside assistance, doorstep pickup, quality repair tracking, and authorized workshop network." />
+    <link rel="canonical" href="https://voltlink.in/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://voltlink.in/" />
+    <meta property="og:site_name" content="VoltLink" />
+    <meta property="og:title" content="VoltLink - Two-Wheeler Servicing & Roadside Assistance" />
+    <meta property="og:description" content="VoltLink - The new companion to your two-wheeler. Roadside assistance, doorstep pickup, quality repair tracking, and authorized workshop network." />
+    <meta property="og:image" content="https://voltlink.in/brand/voltlink-mark.webp" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://voltlink.in/" />
+    <meta name="twitter:title" content="VoltLink - Two-Wheeler Servicing & Roadside Assistance" />
+    <meta name="twitter:description" content="VoltLink - The new companion to your two-wheeler. Roadside assistance, doorstep pickup, quality repair tracking, and authorized workshop network." />
+    <meta name="twitter:image" content="https://voltlink.in/brand/voltlink-mark.webp" />
+
+    <link rel="icon" type="image/png" sizes="128x128" href="/brand/favicon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Silkscreen&family=Public+Sans:ital,wght@0,100..900;1,100..900&family=Geist+Mono:wght@100..900&family=Roboto:wght@500&family=Newsreader:ital,opsz,wght@0,6..72,200..600;1,6..72,200..600&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

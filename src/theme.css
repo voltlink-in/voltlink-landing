@@ -1,0 +1,165 @@
+/* VoltLink theme — Discord-inspired tokens (https://21st.dev/@serafimcloud/themes/discord).
+   Single source of truth for colour. Light = :root, dark = .dark (toggled on <html>
+   by src/shared/store/themeStore.ts and the first-paint script in index.html). */
+
+:root {
+  --card: #ffffff;
+  --ring: #5865f2;
+  --input: #f2f2f3;
+  --muted: #f6f6f6;
+  --accent: #eeeef0;
+  --border: #dfdfe1;
+  --radius: 0.625rem;
+
+  --chart-1: #f5a3d1;
+  --chart-2: #f5d18a;
+  --chart-3: #a3f5d1;
+  --chart-4: #a3d1f5;
+  --chart-5: #d1a3f5;
+
+  --popover: #ffffff;
+  --primary: #5865f2;
+  --sidebar: #f3f3f4;
+  --spacing: 0.25rem;
+
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  --font-sans: "Noto Sans JP", ui-sans-serif, sans-serif, system-ui;
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+
+  --secondary: #f2f2f3;
+  --background: #fbfbfb;
+  --foreground: #28282d;
+  --destructive: #b92733;
+
+  --shadow-blur: 3px;
+  --shadow-color: oklch(0 0 0);
+  --sidebar-ring: #00b0f4;
+  --shadow-spread: 0px;
+  --letter-spacing: 0em;
+  --shadow-opacity: 0.1;
+  --shadow-offset-x: 0;
+  --shadow-offset-y: 1px;
+
+  --sidebar-accent: #e7e7e9;
+  --sidebar-border: #d9d9dc;
+  --card-foreground: #28282d;
+  --sidebar-primary: #dddde0;
+  --muted-foreground: #6c6d76;
+  --accent-foreground: #28282d;
+  --popover-foreground: #28282d;
+  --primary-foreground: #ffffff;
+  --sidebar-foreground: #666770;
+  --secondary-foreground: #28282d;
+  --destructive-foreground: #ffffff;
+  --sidebar-accent-foreground: #28282d;
+  --sidebar-primary-foreground: #28282d;
+}
+
+/* Dark mode: pure-black foundation. Only background/surface/border tokens differ from the Discord palette; foreground, accent and status tokens are unchanged. */
+.dark {
+  --card: #0d0d0d;
+  --ring: #5865f2;
+  --input: #0a0a0a;
+  --muted: #0a0a0a;
+  --accent: #1f1f1f;
+  --border: #242424;
+  --radius: 0.625rem;
+
+  --chart-1: #f5a3d1;
+  --chart-2: #f5d18a;
+  --chart-3: #a3f5d1;
+  --chart-4: #a3d1f5;
+  --chart-5: #d1a3f5;
+
+  --popover: #0d0d0d;
+  --primary: #5865f2;
+  --sidebar: #050505;
+  --spacing: 0.25rem;
+
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  --font-sans: "Noto Sans JP", ui-sans-serif, sans-serif, system-ui;
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+
+  --secondary: #161616;
+  --background: #000000;
+  --foreground: #ffffff;
+  --destructive: #ffa09b;
+
+  --shadow-blur: 3px;
+  --shadow-color: oklch(0 0 0);
+  --sidebar-ring: #00b0f4;
+  --shadow-spread: 0px;
+  --letter-spacing: 0em;
+  --shadow-opacity: 0.1;
+  --shadow-offset-x: 0;
+  --shadow-offset-y: 1px;
+
+  --sidebar-accent: #111111;
+  --sidebar-border: #1a1a1a;
+  --card-foreground: #ffffff;
+  --sidebar-primary: #1a1a1a;
+  --muted-foreground: #a4a5ab;
+  --accent-foreground: #ffffff;
+  --popover-foreground: #ffffff;
+  --primary-foreground: #ffffff;
+  --sidebar-foreground: #999aa1;
+  --secondary-foreground: #ffffff;
+  --destructive-foreground: #ffffff;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-primary-foreground: #ffffff;
+}
+
+@theme inline {
+  --color-card: var(--card);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+  --color-radius: var(--radius);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-popover: var(--popover);
+  --color-primary: var(--primary);
+  --color-sidebar: var(--sidebar);
+  --color-spacing: var(--spacing);
+
+  --color-font-mono: var(--font-mono);
+  --color-font-sans: var(--font-sans);
+  --color-font-serif: var(--font-serif);
+
+  --color-secondary: var(--secondary);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-destructive: var(--destructive);
+
+  --color-shadow-blur: var(--shadow-blur);
+  --color-shadow-color: var(--shadow-color);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-shadow-spread: var(--shadow-spread);
+  --color-letter-spacing: var(--letter-spacing);
+  --color-shadow-opacity: var(--shadow-opacity);
+  --color-shadow-offset-x: var(--shadow-offset-x);
+  --color-shadow-offset-y: var(--shadow-offset-y);
+
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-card-foreground: var(--card-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+}

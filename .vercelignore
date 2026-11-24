@@ -1,0 +1,21 @@
+# Version control
+.git
+.github
+
+# Shell scripts (local monorepo runner scripts)
+*.sh
+
+# Environment secrets
+.env
+.env.development
+.env.local
+.env.*.local
+
+# Build artifacts and caches
+dist/
+dist-*/
+build/
+*.tsbuildinfo
+
+# Logs
+*.log
