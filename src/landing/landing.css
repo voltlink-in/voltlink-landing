@@ -120,6 +120,9 @@
 .vl-links a:hover::before { background: var(--vl-accent); opacity: 1; transform: scale(1.6); }
 .vl-actions { display: flex; align-items: center; gap: 6px; }
 .vl-login {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 13.5px;
   font-weight: 500;
   padding: 8px 12px;
@@ -408,10 +411,40 @@
   transition: transform 0.45s var(--vl-expo), box-shadow 0.35s var(--vl-sine), background-color 0.3s var(--vl-sine), color 0.3s var(--vl-sine);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 8px 20px -10px color-mix(in srgb, var(--vl-accent) 70%, transparent);
 }
-.vl-pill svg { transition: transform 0.45s var(--vl-expo); }
+.vl-pill svg:not(.vl-spin) { transition: transform 0.45s var(--vl-expo); }
 .vl-pill:hover { transform: translateY(-1px); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 14px 28px -12px color-mix(in srgb, var(--vl-accent) 80%, transparent); }
-.vl-pill:hover svg { transform: translateX(3px); }
+.vl-pill:hover svg:not(.vl-spin) { transform: translateX(3px); }
 .vl-pill:active { transform: scale(0.97); transition-duration: 0.12s; }
+
+/* Per-target loading spinner overlay keeping button width fixed */
+.vl-btn-content {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.vl-btn-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.15s var(--vl-sine);
+}
+.vl-btn-content[data-loading='true'] .vl-btn-text {
+  opacity: 0;
+}
+.vl-btn-spinner {
+  position: absolute;
+  inset: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+@keyframes vl-spin {
+  to { transform: rotate(360deg); }
+}
+.vl-spin {
+  animation: vl-spin 0.8s linear infinite;
+}
 .vl-pill--ghost {
   background: var(--vl-pill);
   color: var(--vl-ink);

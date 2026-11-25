@@ -193,6 +193,7 @@
   transition: color 0.25s var(--vl-sine), background-size 0.45s var(--vl-expo);
 }
 .vl-landing .vl-ft-cols a { color: var(--ft-ink); }
+.vl-landing .vl-ft-cols .vl-ft-garage-link { display: inline-flex; align-items: center; gap: 7px; }
 .vl-ft-cols a:hover, .vl-ft-cols button:hover, .vl-landing .vl-ft-cols a:hover { color: var(--ft-accent); background-size: 100% 1px; }
 
 .vl-ft-legal {

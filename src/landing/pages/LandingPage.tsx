@@ -26,6 +26,36 @@ gsap.registerPlugin(ScrollTrigger);
 
 type Icon = typeof Siren;
 type Part = string | { chip: string; icon: Icon };
+type GarageActionTarget =
+  | 'nav-login'
+  | 'nav-signup'
+  | 'mobile-login'
+  | 'mobile-signup'
+  | 'cta-login'
+  | 'cta-signup'
+  | 'footer-login'
+  | 'footer-signup';
+
+function GarageButtonLabel({
+  loading,
+  children,
+  spinnerSize = 15,
+}: {
+  loading: boolean;
+  children: React.ReactNode;
+  spinnerSize?: number;
+}): React.JSX.Element {
+  return (
+    <span className="vl-btn-content" data-loading={loading ? 'true' : undefined}>
+      <span className="vl-btn-text">{children}</span>
+      {loading && (
+        <span className="vl-btn-spinner" aria-hidden="true">
+          <Loader2 size={spinnerSize} className="vl-spin" />
+        </span>
+      )}
+    </span>
+  );
+}
 
 /* ── Story beats: real Customer app screens (public/landing/app), described as the app actually behaves ── */
 const BEATS: {
@@ -197,12 +227,17 @@ export function LandingPage(): React.JSX.Element {
   const year = new Date().getFullYear();
 
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
-  const [isCheckingGarage, setIsCheckingGarage] = React.useState(false);
+  const [checkingGarageTarget, setCheckingGarageTarget] = React.useState<GarageActionTarget | null>(null);
   const [underConstructionOpen, setUnderConstructionOpen] = React.useState(false);
 
-  const handleGarageClick = async (e?: React.SyntheticEvent, path: string = '/login') => {
+  const handleGarageClick = async (
+    e?: React.SyntheticEvent,
+    path: string = '/login',
+    target: GarageActionTarget = 'nav-login'
+  ) => {
     if (e) e.preventDefault();
-    setIsCheckingGarage(true);
+    if (checkingGarageTarget !== null) return;
+    setCheckingGarageTarget(target);
 
     const targetUrl = `${GARAGE_PORTAL_URL}${path}`;
 
@@ -216,10 +251,12 @@ export function LandingPage(): React.JSX.Element {
         signal: controller.signal,
       });
       clearTimeout(timeout);
-      setIsCheckingGarage(false);
+      setCheckingGarageTarget(null);
+      setMobileMenuOpen(false);
       window.location.href = targetUrl;
     } catch {
-      setIsCheckingGarage(false);
+      setCheckingGarageTarget(null);
+      setMobileMenuOpen(false);
       setUnderConstructionOpen(true);
     }
   };
@@ -423,16 +460,22 @@ export function LandingPage(): React.JSX.Element {
             <a
               href={`${GARAGE_PORTAL_URL}/login`}
               className="vl-login cursor-target"
-              onClick={(e) => handleGarageClick(e, '/login')}
+              aria-busy={checkingGarageTarget === 'nav-login'}
+              onClick={(e) => handleGarageClick(e, '/login', 'nav-login')}
             >
-              Garage login
+              <GarageButtonLabel loading={checkingGarageTarget === 'nav-login'}>
+                Garage login
+              </GarageButtonLabel>
             </a>
             <a
               href={`${GARAGE_PORTAL_URL}/contact-admin`}
               className="vl-pill cursor-target"
-              onClick={(e) => handleGarageClick(e, '/contact-admin')}
+              aria-busy={checkingGarageTarget === 'nav-signup'}
+              onClick={(e) => handleGarageClick(e, '/contact-admin', 'nav-signup')}
             >
-              {isCheckingGarage ? <Loader2 size={15} className="animate-spin" /> : 'Get a garage account'}
+              <GarageButtonLabel loading={checkingGarageTarget === 'nav-signup'}>
+                Get a garage account
+              </GarageButtonLabel>
             </a>
           </div>
 
@@ -473,22 +516,22 @@ export function LandingPage(): React.JSX.Element {
               <button
                 type="button"
                 className="vl-mobile-portal-btn cursor-target"
-                onClick={(e) => {
-                  setMobileMenuOpen(false);
-                  handleGarageClick(e, '/login');
-                }}
+                aria-busy={checkingGarageTarget === 'mobile-login'}
+                onClick={(e) => handleGarageClick(e, '/login', 'mobile-login')}
               >
-                Garage login
+                <GarageButtonLabel loading={checkingGarageTarget === 'mobile-login'}>
+                  Garage login
+                </GarageButtonLabel>
               </button>
               <button
                 type="button"
                 className="vl-pill vl-pill--full cursor-target"
-                onClick={(e) => {
-                  setMobileMenuOpen(false);
-                  handleGarageClick(e, '/contact-admin');
-                }}
+                aria-busy={checkingGarageTarget === 'mobile-signup'}
+                onClick={(e) => handleGarageClick(e, '/contact-admin', 'mobile-signup')}
               >
-                Get a garage account
+                <GarageButtonLabel loading={checkingGarageTarget === 'mobile-signup'}>
+                  Get a garage account
+                </GarageButtonLabel>
               </button>
             </div>
             <div className="vl-mobile-divider" />
@@ -607,18 +650,24 @@ export function LandingPage(): React.JSX.Element {
                 href={`${GARAGE_PORTAL_URL}/login`}
                 className="vl-pill vl-pill--lg cursor-target"
                 data-fade
-                onClick={(e) => handleGarageClick(e, '/login')}
+                aria-busy={checkingGarageTarget === 'cta-login'}
+                onClick={(e) => handleGarageClick(e, '/login', 'cta-login')}
               >
-                Garage owner login
-                <ArrowRight size={16} strokeWidth={2.2} />
+                <GarageButtonLabel loading={checkingGarageTarget === 'cta-login'} spinnerSize={16}>
+                  Garage owner login
+                  <ArrowRight size={16} strokeWidth={2.2} />
+                </GarageButtonLabel>
               </a>
               <a
                 href={`${GARAGE_PORTAL_URL}/contact-admin`}
                 className="vl-pill vl-pill--ghost vl-pill--lg cursor-target"
                 data-fade
-                onClick={(e) => handleGarageClick(e, '/contact-admin')}
+                aria-busy={checkingGarageTarget === 'cta-signup'}
+                onClick={(e) => handleGarageClick(e, '/contact-admin', 'cta-signup')}
               >
-                Contact admin for an account
+                <GarageButtonLabel loading={checkingGarageTarget === 'cta-signup'} spinnerSize={16}>
+                  Contact admin for an account
+                </GarageButtonLabel>
               </a>
             </div>
           </div>
@@ -653,6 +702,7 @@ export function LandingPage(): React.JSX.Element {
         isLight={isLight}
         onToggleTheme={toggleTheme}
         year={year}
+        checkingTarget={checkingGarageTarget}
         onGarageAction={handleGarageClick}
       />
 

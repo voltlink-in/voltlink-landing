@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { ArrowUp, Route, Siren, Warehouse, Wrench } from 'lucide-react';
+import { ArrowUp, Loader2, Route, Siren, Warehouse, Wrench } from 'lucide-react';
 import { FooterScooter } from './FooterScooter';
 import './footer.css';
 
@@ -22,14 +22,15 @@ interface Props {
   isLight: boolean;
   onToggleTheme: () => void;
   year: number;
-  onGarageAction?: (e: React.MouseEvent, path: string) => void;
+  checkingTarget?: string | null;
+  onGarageAction?: (e: React.MouseEvent, path: string, target: 'footer-login' | 'footer-signup') => void;
 }
 
 /**
  * The last chapter: one scooter parked on the dark slab the footer is built on, the giant wordmark behind it, what
  * VoltLink does along the slab's top, then the links.
  */
-export function LandingFooter({ rootRef, nav, scrollTo, isLight, onToggleTheme, year, onGarageAction }: Props): React.JSX.Element {
+export function LandingFooter({ rootRef, nav, scrollTo, isLight, onToggleTheme, year, checkingTarget, onGarageAction }: Props): React.JSX.Element {
   const footRef = useRef<HTMLElement>(null);
   const speedRef = useRef<HTMLSpanElement>(null);
 
@@ -122,19 +123,23 @@ export function LandingFooter({ rootRef, nav, scrollTo, isLight, onToggleTheme, 
                 <li>
                   <a
                     href={`${GARAGE_PORTAL_URL}/login`}
-                    className="cursor-target"
-                    onClick={(e) => (onGarageAction ? onGarageAction(e, '/login') : undefined)}
+                    className="cursor-target vl-ft-garage-link"
+                    aria-busy={checkingTarget === 'footer-login'}
+                    onClick={(e) => (onGarageAction ? onGarageAction(e, '/login', 'footer-login') : undefined)}
                   >
-                    Garage owner login
+                    {checkingTarget === 'footer-login' && <Loader2 size={14} className="vl-spin" aria-hidden="true" />}
+                    <span>Garage owner login</span>
                   </a>
                 </li>
                 <li>
                   <a
                     href={`${GARAGE_PORTAL_URL}/contact-admin`}
-                    className="cursor-target"
-                    onClick={(e) => (onGarageAction ? onGarageAction(e, '/contact-admin') : undefined)}
+                    className="cursor-target vl-ft-garage-link"
+                    aria-busy={checkingTarget === 'footer-signup'}
+                    onClick={(e) => (onGarageAction ? onGarageAction(e, '/contact-admin', 'footer-signup') : undefined)}
                   >
-                    Contact admin
+                    {checkingTarget === 'footer-signup' && <Loader2 size={14} className="vl-spin" aria-hidden="true" />}
+                    <span>Contact admin</span>
                   </a>
                 </li>
               </ul>
